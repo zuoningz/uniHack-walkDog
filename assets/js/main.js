@@ -16,30 +16,38 @@ Table of Content
         Auto-generate Posts
 ----------------------------------- */
 
-function add_div(oid, imgSrc) {
-    var e = document.getElementById("details");
-    var div = document.createElement("div");
-    div.className = "card";
-    div.id = oid;
-    div.innerHTML = e.innerHTML;
-    div.getElementById("imgSrc").src = imgSrc;
-    document.getElementById("form").appendChild(div);
-}
+    function add_div(oid, userNa, imgSrc, title, description, dateStart, dateEnd) {
+        var e = document.getElementById("details");
+        var div = document.createElement("div");
+        div.className = "card";
+        div.id = "oid";
+        div.innerHTML = e.innerHTML;
+        document.getElementById("usrName").innerHTML = userNa;
+        document.getElementById("imgSrc").src = imgSrc;
+        document.getElementById("titleP").innerHTML = title;
+        document.getElementById("desP").innerHTML = description;
+        document.getElementById("dateStart").innerHTML = dateStart;
+        document.getElementById("dateEnd").innerHTML = dateEnd;
+        document.getElementById("form").appendChild(div);
+    }
 
 function index_onload() {
-    
     $.ajax({
         type: 'GET',
         dataType: 'json',
         contentType: "application/json",
         url: "https://dog-partner-app.herokuapp.com/api/agora",
         crossDomain: true,
-        success: function (data) {
-            var dataObj = JSON.parse(data);
+        success: function (data, textStatus, xhr) {
             for (var i = 0; i < 16; i++) {
-                var oid = dataObj[i].oid;
-                var imgSrc = dataObj[i].image_url;
-                add_div(oid, imgSrc);
+                var userNa = data[i].username;
+                var imgSrc = data[i].image_url;
+                var title = data[i].title;
+                var description = data[i].description;
+                var dateStart = data[i].start_time;
+                var dateEnd = data[i].end_time;
+                var oid = data[i].oid;
+                add_div(oid, userNa, imgSrc, title, description, dateStart, dateEnd);
             }
         },
         error: function () {

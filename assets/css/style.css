@@ -1028,6 +1028,8 @@ ul {
 .post-card-image {
   margin-top: -60px;
   margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
   position: relative;
   border-radius: 20px;
   overflow: hidden;
